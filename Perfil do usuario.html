@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBN - Perfil do Profissional</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgb(15, 15, 96);
+            padding: 10px 20px;
+            position: relative;
+            width: 100%;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            width: 180px;
+            height: auto;
+            max-height: 70px;
+            object-fit: contain;
+        }
+
+        #menu-icon {
+            display: none;
+            cursor: pointer;
+        }
+
+        #menu-icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            opacity: 0.95;
+            transition: opacity 0.2s;
+        }
+
+        .menu a:hover {
+            opacity: 1;
+        }
+
+        .menu a.ativo {
+            font-weight: 700;
+            border-bottom: 2px solid white;
+            padding-bottom: 3px;
+        }
+
+        .btn-entrar {
+            background-color: white !important;
+            color: black !important;
+            padding: 8px 14px !important;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .perfil {
+            max-width: 1100px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .badge-azul {
+            background: #0f2f66;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .badge-azul strong {
+            font-size: 1.4rem;
+        }
+
+        .badge-azul span {
+            font-size: 0.95rem;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 6px;
+        }
+
+        .perfil-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .foto-principal {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .card-contacto {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .card-contacto h3 {
+            color: #0f2f66;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .btn-azul1, .ana {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-azul1 {
+            background-color: #25d366;
+            color: white;
+        }
+
+        .ana {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .btn-azul1:hover, .ana:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-azul1 img, .ana img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .grid-baixo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .box h3 {
+            color: #0f2f66;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 8px;
+        }
+
+        .lista-servicos {
+            list-style: none;
+        }
+
+        .lista-servicos li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .lista-servicos li:last-child {
+            border-bottom: none;
+        }
+
+        .lista-servicos b {
+            color: #0f2f66;
+        }
+
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .galeria img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .galeria img:hover {
+            transform: scale(1.05);
+        }
+
+        .map {
+            background: #eef2ff;
+            color: #0f2f66;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .horario {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .aberto {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-size: 0.85rem;
+            background-color: rgb(72, 72, 187);
+            margin-top: auto;
+        }
+
+      
+        @media (max-width: 768px) {
+            #menu-icon {
+                display: block;
+            }
+
+            .menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgb(15, 15, 96);
+                padding: 20px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+                z-index: 1000;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .menu.active {
+                display: flex;
+            }
+
+            .badge-azul {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .perfil-top, .grid-baixo {
+                grid-template-columns: 1fr;
+            }
+
+            .foto-principal {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div id="menu-icon"><img src="imagens/icone-removebg-preview.png" alt="Menu"></div>
+            <div class="logo"> <img src="imagens/Gemini_Generated_Image_lz5nrtlz5nrtlz5n-removebg-preview.png" alt="CBN Logo"></div>
+        </div>
+
+        <nav class="menu" id="navMenu">
+            <a href="pagina principal.html">Início</a>
+            <a href="comentarios.html">Comentários</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="opcoes.html" class="btn-entrar">👤 Cadastrar-se</a>
+        </nav>
+    </header>
+    
+    <main class="perfil">
+        <div class="badge-azul">
+            <strong>Manuel Latifo</strong>
+            <span>Carpinteiro Artesanal</span>
+        </div>
+
+        <div class="perfil-top">
+            <img class="foto-principal" src="imagens/perfil.jpeg" alt="Manuel Latifo carpinteiro">
+
+            <div class="card-contacto">
+                <h3>Contactos</h3>
+                <a class="btn-azul1" href="https://wa.me/879258436" target="_blank"> 
+                    <img src="imagens/icone_whatsapp-removebg-preview.png" alt="WhatsApp"> Contactar via WhatsApp
+                </a>
+                <a class="ana" href="tel:879258436">
+                    <img src="imagens/Azul-removebg-preview.png" alt="Telefone"> Contactar direto
+                </a>
+            </div>
+        </div>
+        
+        <div class="grid-baixo">
+            <div>
+                <div class="box">
+                    <h3>Serviços e Preços</h3>
+                    <ul class="lista-servicos">
+                        <li><span>Montagem de mobília completa</span><b>500 MT</b></li>
+                        <li><span>Troca de madeira na mobília</span><b>1.500 MT</b></li>
+                        <li><span>Mandar fazer um armário</span><b>2.000 MT</b></li>
+                        <li><span>Mandar base</span><b>Sob consulta</b></li>
+                        <li><span>Manutenção preventiva da mobília</span><b>1.200 MT</b></li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h3>Galeria de Trabalhos (6)</h3>
+                    <div class="galeria">
+                        <img src="imagens/bb.jpe" alt="Trabalho 1">
+                        <img src="imagens/bb.jpe" alt="Trabalho 2">
+                        <img src="imagens/bb.jpe" alt="Trabalho 3">
+                        <img src="imagens/bb.jpe" alt="Trabalho 4">
+                        <img src="imagens/bb.jpe" alt="Trabalho 5">
+                        <img src="imagens/bb.jpe" alt="Trabalho 6">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="box">
+                    <h3>Localização</h3>
+                    <div class="map">📍 Mapa - Bairro do Bloco 1<br>Nacala-Porto</div>
+                    <p style="font-size:0.85rem; margin-top:10px; color:rgb(82, 80, 80);">
+                        Rua 5, casa 123, próximo ao mercado central. Referência: em frente à farmácia.
+                    </p>
+                </div>
+
+                <div class="box">
+                    <h3>Horário de Atendimento</h3>
+                    <div class="horario">
+                        Segunda - Sexta: 07:00 - 18:00<br>
+                        Sábado: 07:00 - 14:00<br>
+                        Domingo: Fechado<br><br>
+                        <span class="aberto">🟢 Aberto agora</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 CBN. Todos os direitos reservados | Termos de Uso | Política de Privacidade
+    </footer>
+
+    <script>
+        const menuIcon = document.getElementById('menu-icon');
+        const navMenu = document.getElementById('navMenu');
+
+        menuIcon.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        const menuLinks = navMenu.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
